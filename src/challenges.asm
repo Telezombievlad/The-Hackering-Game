@@ -261,7 +261,7 @@ LVL3_passed:
 ;===================================================================
 
 section .data
-FIN_code_hash	db	0x91,0x9a,0x16,0x80,0x1f,0xa8,0x28,0x52,0xbe,0x75,0x44,0x42,0x0f,0x3a,0xa4,0x80
+FIN_code_hash	db	0x32,0xfd,0x36,0x3e,0x68,0x70,0xd3,0x18,0x4d,0x18,0x31,0x1e,0x33,0x8c,0x86,0x05
 
 extern FIN_cheaterEnding
 extern FIN_hackerEnding
@@ -270,10 +270,10 @@ extern FIN_geniusEnding
 section .text
 global FIN_interact
 FIN_interact:
-	mov rdi, Delay         ; < rax = hashPass(Delay, 200, FIN_code_hash)
-	mov rsi, 200d          ; <
-	mov rdx, FIN_code_hash ; <
-	call hashPass          ; <
+	mov rdi, Delay         ; < rax = hashPass(Delay, ..., FIN_code_hash)
+	mov rsi, 140h          ; < 
+	mov rdx, FIN_code_hash ; < 
+	call hashPass          ; < 
 
 	xor rcx, rcx ; rcx = 0
 

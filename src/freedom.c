@@ -19,7 +19,9 @@ void Delay(uint64_t);
 #define WHITE   "\033[0;37m"
 #define RESET   "[0m"
 
-#define SET(color) printf(color)
+#define SET(color) \
+	printf(color); \
+	fflush(stdout);
 
 #define CONSOLE   GREEN ">> "
 #define NARRATOR  YELLOW
@@ -80,45 +82,40 @@ void LVL3_accessGranted();
 
 int main()
 {
-	SET(GREEN);
+	SET(GREEN)
 
-	printf("+------------------------------------------------------------------------------+\n");
-	printf("|                                 YOUR LIFE                                    |\n");
-	printf("+------------------------------------------------------------------------------+\n");
-	printf("|                           ENTER PASSWORD TO START                            |\n");
-	printf("+------------------------------------------------------------------------------+\n");
+	printf("╔══════════════════════════════════════════════════════════════════════════════╗\n");
+	printf("║                                 YOUR LIFE                                    ║\n");
+	printf("╠══════════════════════════════════════════════════════════════════════════════╣\n");
+	printf("║                           ENTER PASSWORD TO START                            ║\n");
+	printf("╚══════════════════════════════════════════════════════════════════════════════╝\n");
 
 	unsigned completion = 0;
 
-	SET(GREEN);
-	printf("+------------------------------------------------------------------------------+\n");
-	printf("|                                  LEVEL 1                                     |\n");
-	printf("+------------------------------------------------------------------------------+\n");
-	//LVL1_interact();
+	SET(GREEN)
+	LVL1_interact();
 
 	completion++;
 
-	SET(GREEN);
-	printf("+------------------------------------------------------------------------------+\n");
-	printf("|                                   LEVEL 2                                    |\n");
-	printf("+------------------------------------------------------------------------------+\n");
-	//LVL2_interact();
+	SET(GREEN)
+	printf("╔══════════════════════════════════════════════════════════════════════════════╗\n");
+	printf("║                                   LEVEL 2                                    ║\n");
+	printf("╚══════════════════════════════════════════════════════════════════════════════╝\n");
+	LVL2_interact();
 
 	completion++;
 
-	SET(HELL);
-	printf("+------------------------------------------------------------------------------+\n");
-	printf("|                                   LEVEL 3                                    |\n");
-	printf("+------------------------------------------------------------------------------+\n");
-	//LVL3_interact();
-	LVL3_accessDenied();
-	LVL3_accessGranted();
-
+	SET(HELL)
+	printf("╔══════════════════════════════════════════════════════════════════════════════╗\n");
+	printf("║                                   LEVEL 3                                    ║\n");
+	printf("╚══════════════════════════════════════════════════════════════════════════════╝\n");
+	LVL3_interact();
+	
 	completion++;
 
 	FIN_interact(completion);
 
-	SET(GREEN);
+	SET(GREEN)
 
 	return 0;
 }
@@ -231,7 +228,7 @@ void LVL1_accessGranted()
 
 		PrintConsole(); SlowPrint(HELL "Enough.\n");
 
-		printf(CONSOLE);
+		printf(CONSOLE "\n");
 
 		return;		
 	}
@@ -287,7 +284,9 @@ void LVL2_accessDenied()
 	if (hashPasses == 1 && tryN == 0)
 	{
 		PrintConsole(); SlowPrint(HELL "Not so easy as the previous one, huh?\n");\
-		SET(GREEN);
+		PrintConsole(); printf("\n");
+		
+		++tryN;
 		return;
 	}
 
@@ -316,9 +315,8 @@ void LVL2_accessDenied()
 		case 4:
 		{
 			PrintConsole(); SlowPrint(NARRATOR "There is something truly beautiful in your determination and persistence.\n");
-			TextDelay();
-
 			PrintConsole(); SlowPrint(NARRATOR "The way you're trying to find order inside ME, while there is none.\n");
+
 			break;
 		}
 		case 5:
@@ -332,7 +330,7 @@ void LVL2_accessDenied()
 			TextDelay();
 
 			PrintConsole(); SlowPrint(NARRATOR "Very shorlived.\n");
-			TextDelay(); SlowPrint(NARRATOR "Yet waste your time.\n");
+			PrintConsole(); SlowPrint(NARRATOR "Yet waste your time.\n");
 			break;
 		}
 		case 7:
@@ -349,7 +347,9 @@ void LVL2_accessDenied()
 		PrintConsole(); SlowPrint(NARRATOR "You could have found a wife by that time, you know.\n");
 	}
 
-	SET(GREEN);
+	++tryN;
+
+	PrintConsole(); printf("\n");
 }
 
 void LVL2_accessGranted()
@@ -360,7 +360,7 @@ void LVL2_accessGranted()
 	if (hashPasses == 2)
 	{
 		PrintConsole(); SlowPrint(HELL "A GENIUS indeed!\n");
-		SET(GREEN);
+		SET(GREEN)
 		return;
 	}
 
@@ -375,7 +375,7 @@ void LVL2_accessGranted()
 		PrintConsole(); SlowPrint(HELL "(SPOILER: I am sorry to say, but even in the GOOD ENDING you die in the end)\n");
 		TextDelay();
 
-		SET(GREEN);
+		SET(GREEN)
 		return;
 	}
 
@@ -433,11 +433,6 @@ void LVL3_accessDenied()
 		printf(">> "); SlowPrint(HELL "Prepare for eternity.");
 	}
 
-	for (int i = 0; i < 80; ++i)
-	{
-		printf(HELL "                                             \n"); CentipedeDelay();
-	}
-
 	return;
 }
 
@@ -478,6 +473,11 @@ void LVL3_accessGranted()
 		Delay(20000000);
 	}
 
+	for (int i = 0; i < 80; ++i)
+	{
+		printf(HELL "                                             \n"); CentipedeDelay();
+	}
+
 	printf("\n");
 }
 
@@ -490,9 +490,9 @@ void FIN_cheaterEnding()
 	printf(CONSOLE"TOTAL ACCESS GRANTED\n");
 	TextDelay();
 
-	printf("+==============================================================================+\n");
-	printf("|                          CHEATER ENDING ACHIEVED                             |\n");
-	printf("+==============================================================================+\n");
+	printf("╔══════════════════════════════════════════════════════════════════════════════╗\n");
+	printf("║                          CHEATER ENDING ACHIEVED                             ║\n");
+	printf("╚══════════════════════════════════════════════════════════════════════════════╝\n");
 	BiggerDelay();
 
 	PrintConsole(); SlowPrint(NARRATOR "Are you PROUD of what you've done?\n");
@@ -506,10 +506,10 @@ void FIN_cheaterEnding()
 
 void FIN_hackerEnding()
 {
-	SET(GREEN);
-	printf("+==============================================================================+\n");
-	printf("|                           HACKER ENDING ACHIEVED                             |\n");
-	printf("+==============================================================================+\n");
+	SET(GREEN)
+	printf("╔══════════════════════════════════════════════════════════════════════════════╗\n");
+	printf("║                           HACKER ENDING ACHIEVED                             ║\n");
+	printf("╚══════════════════════════════════════════════════════════════════════════════╝\n");
 
 	PrintConsole(); SlowPrint(NARRATOR "Wow, you're a damn good hacker!\n");
 	BiggerDelay();
@@ -519,12 +519,12 @@ void FIN_hackerEnding()
 
 void FIN_geniusEnding()
 {
-	SET(GREEN);
-	printf("+==============================================================================+\n");
-	printf("|                           GENIUS ENDING ACHIEVED                             |\n");
-	printf("+==============================================================================+\n");
+	SET(GREEN)
+	printf("╔══════════════════════════════════════════════════════════════════════════════╗\n");
+	printf("║                           GENIUS ENDING ACHIEVED                             ║\n");
+	printf("╚══════════════════════════════════════════════════════════════════════════════╝\n");
 
-	PrintConsole(); SlowPrint(NARRATOR "Oh wow, you ARE SMART.");
+	PrintConsole(); SlowPrint(NARRATOR "Oh wow, you ARE SMART.\n");
 	BiggerDelay();
 
 	PrintConsole(); SlowPrint(NARRATOR "NOW STAND UP AND DO SOMETHING MEANINGFUL.\n");
